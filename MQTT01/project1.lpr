@@ -16,6 +16,7 @@ uses
 
 begin
   RequireDerivedFormResource:=True;
+  Application.Title:='MQTT01';
   Application.Scaled:=True;
   {$PUSH}{$WARN 5044 OFF}
   Application.MainFormOnTaskbar:=True;
