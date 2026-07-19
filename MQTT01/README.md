@@ -7,3 +7,4 @@ For testing, copy the DLL to the same location as the test exe file.
   - Support:
     - https://mosquitto.org/files/binary/cygwin/ => mosquitto-1.3.5-install-cygwin.exe
     - https://mosquitto.org/download/ => mosquitto-2.1.2-install-windows-x86
+    - https://mosquitto.org/download/ => mosquitto-2.0.12-install-windows-x64
