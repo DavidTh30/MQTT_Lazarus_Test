@@ -21,16 +21,17 @@ type
     ButtonUnsubscribe: TButton;
     CheckBoxDebug: TCheckBox;
     CheckBoxSSL: TCheckBox;
+    ComboBoxSubs: TComboBox;
     EditHost: TEdit;
-    Edit10: TEdit;
-    Edit11: TEdit;
+    EditRespTopic: TEdit;
+    EditCorrelData: TEdit;
     EditPort: TEdit;
     EditID: TEdit;
     EditUser: TEdit;
     EditPass: TEdit;
-    Edit6: TEdit;
-    Edit8: TEdit;
-    Edit9: TEdit;
+    EditTopic: TEdit;
+    EditPubTopic: TEdit;
+    EditPubMessage: TEdit;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -48,6 +49,9 @@ type
     procedure Button1Click(Sender: TObject);
     procedure ButtonConnectClick(Sender: TObject);
     procedure ButtonDisconnectClick(Sender: TObject);
+    procedure ButtonPublishClick(Sender: TObject);
+    procedure ButtonSubscribeClick(Sender: TObject);
+    procedure ButtonUnsubscribeClick(Sender: TObject);
   private
 
   public
@@ -270,6 +274,57 @@ begin
   Res := FClient.Disconnect;
   if Res <> mqeNoError then
     log3(Format('disconnect: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+  ComboBoxSubs.Clear;
+end;
+
+procedure TForm1.ButtonPublishClick(Sender: TObject);
+var
+  Res: TMQTTError;
+  UserProps: TMQTTUserProperties;
+begin
+  // set whatever props you need or leave it out and ignore this feature
+  UserProps.Clear;
+  UserProps.SetVal('client-software', 'prof7bit/fpc-mqtt-client');
+  UserProps.SetVal('Content-Type', 'text/plain; charset=utf-8');
+
+  Res := FClient.Publish(EditPubTopic.Text, EditPubMessage.Text, EditRespTopic.Text,
+    EditCorrelData.Text, SpinEditQoS.Value, False, UserProps);
+
+  if Res <> mqeNoError then
+    log3(Format('publish: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+end;
+
+procedure TForm1.ButtonSubscribeClick(Sender: TObject);
+var
+  Res: TMQTTError;
+  ID: UInt32;
+begin
+  ID := SpinEditSubID.Value;
+  if ID > 0 then
+    SpinEditSubID.Value := ID + 1;
+  Res := FClient.Subscribe(EditTopic.Text, 2, ID);
+  if Res <> mqeNoError then
+    log3(Format('subscribe: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]))
+  else begin
+    ComboBoxSubs.Items.Add(EditTopic.Text);
+    ComboBoxSubs.Text := EditTopic.Text;
+  end;
+end;
+
+procedure TForm1.ButtonUnsubscribeClick(Sender: TObject);
+var
+  TopicFilter: String;
+  Res: TMQTTError;
+begin
+  TopicFilter := ComboBoxSubs.Text;
+  if Text <> '' then begin
+    Res := FClient.Unsubscribe(TopicFilter);
+    if ComboBoxSubs.ItemIndex >= 0 then begin
+      ComboBoxSubs.Items.Delete(ComboBoxSubs.ItemIndex);
+      ComboBoxSubs.ItemIndex := 0;
+    end
+    else
+      log3(Format('unsubscribe: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));  end;
 end;
 
 end.

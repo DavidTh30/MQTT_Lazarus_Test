@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 394
-  Height = 585
+  Height = 616
   Top = 36
   Width = 715
   Caption = 'Form1'
-  ClientHeight = 585
+  ClientHeight = 616
   ClientWidth = 715
   LCLVersion = '4.4.0.0'
   object Button1: TButton
@@ -143,7 +143,7 @@ object Form1: TForm1
     Width = 31
     Caption = 'Topic:'
   end
-  object Edit6: TEdit
+  object EditTopic: TEdit
     Left = 521
     Height = 23
     Top = 256
@@ -170,32 +170,33 @@ object Form1: TForm1
     BorderSpacing.Right = 10
     Caption = 'Subscribe'
     TabOrder = 11
+    OnClick = ButtonSubscribeClick
   end
   object Label8: TLabel
-    Left = 448
+    Left = 440
     Height = 15
-    Top = 400
+    Top = 432
     Width = 31
     Caption = 'Topic:'
   end
-  object Edit8: TEdit
-    Left = 521
-    Height = 23
-    Top = 392
-    Width = 184
-    TabOrder = 12
-  end
-  object Edit9: TEdit
-    Left = 521
+  object EditPubTopic: TEdit
+    Left = 515
     Height = 23
     Top = 424
-    Width = 184
+    Width = 190
+    TabOrder = 12
+  end
+  object EditPubMessage: TEdit
+    Left = 515
+    Height = 23
+    Top = 456
+    Width = 190
     TabOrder = 13
   end
   object Label9: TLabel
-    Left = 448
+    Left = 440
     Height = 15
-    Top = 432
+    Top = 464
     Width = 49
     Caption = 'Message:'
   end
@@ -203,36 +204,38 @@ object Form1: TForm1
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 521
+    Left = 515
     Height = 25
-    Top = 552
-    Width = 184
+    Top = 584
+    Width = 190
     BorderSpacing.Top = 4
     BorderSpacing.Right = 10
     Caption = 'Publish'
     TabOrder = 14
+    OnClick = ButtonPublishClick
   end
   object ButtonUnsubscribe: TButton
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 521
+    Left = 515
     Height = 25
-    Top = 352
-    Width = 184
+    Top = 384
+    Width = 190
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 5
     BorderSpacing.Right = 10
     Caption = 'Unsubscribe'
     TabOrder = 15
+    OnClick = ButtonUnsubscribeClick
   end
   object SpinEditQoS: TSpinEdit
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Side = asrBottom
-    Left = 521
+    Left = 515
     Height = 23
-    Top = 520
-    Width = 184
+    Top = 552
+    Width = 190
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 3
     MaxValue = 2
@@ -242,9 +245,9 @@ object Form1: TForm1
     AnchorSideTop.Control = SpinEditQoS
     AnchorSideTop.Side = asrCenter
     AnchorSideRight.Control = SpinEditQoS
-    Left = 496
+    Left = 490
     Height = 15
-    Top = 524
+    Top = 556
     Width = 22
     Anchors = [akTop, akRight]
     BorderSpacing.Right = 3
@@ -252,31 +255,31 @@ object Form1: TForm1
     ParentColor = False
   end
   object Label10: TLabel
-    Left = 448
+    Left = 440
     Height = 15
-    Top = 464
+    Top = 496
     Width = 59
     Caption = 'Resp. Topic'
   end
   object Label11: TLabel
-    Left = 448
+    Left = 440
     Height = 15
-    Top = 496
+    Top = 528
     Width = 62
     Caption = 'Correl. Data'
   end
-  object Edit10: TEdit
-    Left = 521
-    Height = 23
-    Top = 456
-    Width = 184
-    TabOrder = 17
-  end
-  object Edit11: TEdit
-    Left = 521
+  object EditRespTopic: TEdit
+    Left = 515
     Height = 23
     Top = 488
-    Width = 184
+    Width = 190
+    TabOrder = 17
+  end
+  object EditCorrelData: TEdit
+    Left = 515
+    Height = 23
+    Top = 520
+    Width = 190
     TabOrder = 18
   end
   object SpinEditSubID: TSpinEdit
@@ -290,5 +293,22 @@ object Form1: TForm1
     BorderSpacing.Top = 3
     TabOrder = 19
     Value = 1
+  end
+  object ComboBoxSubs: TComboBox
+    AnchorSideLeft.Control = EditHost
+    AnchorSideTop.Control = ButtonPublish
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 520
+    Height = 23
+    Top = 352
+    Width = 184
+    Anchors = []
+    BorderSpacing.Top = 15
+    BorderSpacing.Right = 10
+    ItemHeight = 15
+    Style = csDropDownList
+    TabOrder = 20
   end
 end
