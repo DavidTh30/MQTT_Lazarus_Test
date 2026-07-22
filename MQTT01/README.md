@@ -8,5 +8,5 @@ For testing, copy the DLL to the same location as the test exe file.
     - Lazarus 4.4 (rev lazarus_4_4) FPC 3.2.2 i386-win32-win32/win64
       - https://mosquitto.org/files/binary/cygwin/ => mosquitto-1.3.5-install-cygwin.exe
       - https://mosquitto.org/download/ => mosquitto-2.1.2-install-windows-x86
-    - Lazarus 4.4 xxx
+    - Lazarus 3.4 (rev lazarus_3_4) FPC 3.2.2 x86_64-win64-win32/win64
       - https://mosquitto.org/download/ => mosquitto-2.0.12-install-windows-x64
