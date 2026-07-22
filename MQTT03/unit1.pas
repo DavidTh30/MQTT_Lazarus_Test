@@ -6,14 +6,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Spin,
-  StdCtrls, mqtt, inifiles, TypInfo, opensslsockets, simpleipc;
+  StdCtrls, mqtt, TypInfo, opensslsockets, simpleipc;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
-    Button1: TButton;
     ButtonConnect: TButton;
     ButtonDisconnect: TButton;
     ButtonPublish: TButton;
@@ -44,19 +43,21 @@ type
     Label8: TLabel;
     Label9: TLabel;
     LabelQoS: TLabel;
+    Shape1: TShape;
+    Shape2: TShape;
     SpinEditQoS: TSpinEdit;
     SpinEditSubID: TSpinEdit;
-    procedure Button1Click(Sender: TObject);
     procedure ButtonConnectClick(Sender: TObject);
     procedure ButtonDisconnectClick(Sender: TObject);
     procedure ButtonPublishClick(Sender: TObject);
     procedure ButtonSubscribeClick(Sender: TObject);
     procedure ButtonUnsubscribeClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
   private
 
   public
     FClient: TMQTTClient;
-    constructor Create(TheOwner: TComponent);
+    constructor Create(TheOwner: TComponent); override;
     procedure OnIdle(Sender: TObject; var Done: boolean);
     procedure log3(s:String);
     procedure SendMemMessage_(s:String);
@@ -201,16 +202,16 @@ procedure TForm1.OnReceive(Client: TMQTTClient; Msg: TMQTTRXData);
 var
   I: Integer;
 begin
-  log3(Format('OnReceive: QoS %d %d %d %s = %s',
-    [Msg.QoS, Msg.SubsID, Msg.ID, Msg.Topic, Msg.Message]));
+  //log3(Format('OnReceive: QoS %d %d %d %s = %s', [Msg.QoS, Msg.SubsID, Msg.ID, Msg.Topic, Msg.Message]));
+  SendMessage_(Msg.Topic+'/'+Msg.Message);
   if Msg.RespTopic <> '' then
-    log3(Format('           Response Topic: %s', [Msg.RespTopic]));
+    log3({$I %LINE%} +Format('           Response Topic: %s', [Msg.RespTopic]));
   if Msg.CorrelData <> '' then
-    log3(Format('           Correlation Data: %s', [Msg.CorrelData]));
+    log3({$I %LINE%} +Format('           Correlation Data: %s', [Msg.CorrelData]));
   with Msg.UserProps do begin
     if Count > 0 then begin
       for I := 0 to Count - 1 do begin
-        log3(Format('           Prop %s: %s', [GetKey(I), GetVal(I)]));
+        log3({$I %LINE%} +Format('           Prop %s: %s', [GetKey(I), GetVal(I)]));
       end;
     end;
   end;
@@ -225,7 +226,7 @@ begin
   for C in Handler.SSL.PeerFingerprint('SHA256') do begin
     S += IntToHex(Ord(C), 2);
   end;
-  log3('OnVerifySSL cert fingerprint: ' + S);
+  log3({$I %LINE%} +'OnVerifySSL cert fingerprint: ' + S);
   Allow := True;
 end;
 
@@ -240,7 +241,6 @@ constructor TForm1.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
 
-
   Application.OnIdle := @OnIdle;
 
   FClient := TMQTTClient.Create(Self);
@@ -250,11 +250,8 @@ begin
   FClient.OnVerifySSL := @OnVerifySSL;
   FClient.OnReceive := @OnReceive;
 
-end;
-
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-
+  log3('clear');
+  log3({$I %LINE%} +' TForm1.Create');
 end;
 
 procedure TForm1.ButtonConnectClick(Sender: TObject);
@@ -264,7 +261,9 @@ begin
   Res := FClient.Connect(EditHost.Text, StrToIntDef(EditPort.Text, 1883),
     EditID.Text, EditUser.Text, EditPass.Text, CheckBoxSSL.Checked, False);
   if Res <> mqeNoError then
-    log3(Format('connect: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+    log3({$I %LINE%} +Format('connect: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+  if Res = mqeNoError then
+    log3({$I %LINE%} +Format('connect: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
 end;
 
 procedure TForm1.ButtonDisconnectClick(Sender: TObject);
@@ -273,7 +272,7 @@ var
 begin
   Res := FClient.Disconnect;
   if Res <> mqeNoError then
-    log3(Format('disconnect: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+    log3({$I %LINE%} +Format(' disconnect: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
   ComboBoxSubs.Clear;
 end;
 
@@ -291,7 +290,7 @@ begin
     EditCorrelData.Text, SpinEditQoS.Value, False, UserProps);
 
   if Res <> mqeNoError then
-    log3(Format('publish: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+    log3({$I %LINE%} +Format('publish: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
 end;
 
 procedure TForm1.ButtonSubscribeClick(Sender: TObject);
@@ -304,7 +303,7 @@ begin
     SpinEditSubID.Value := ID + 1;
   Res := FClient.Subscribe(EditTopic.Text, 2, ID);
   if Res <> mqeNoError then
-    log3(Format('subscribe: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]))
+    log3({$I %LINE%} +Format('subscribe: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]))
   else begin
     ComboBoxSubs.Items.Add(EditTopic.Text);
     ComboBoxSubs.Text := EditTopic.Text;
@@ -324,7 +323,24 @@ begin
       ComboBoxSubs.ItemIndex := 0;
     end
     else
-      log3(Format('unsubscribe: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));  end;
+      log3({$I %LINE%} +Format('unsubscribe: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));  end;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+var
+  Res: TMQTTError;
+  TopicFilter: String;
+begin
+  for TopicFilter in ComboBoxSubs.Items do
+  begin
+    Res := FClient.Unsubscribe(TopicFilter);
+    log3({$I %LINE%} +Format('unsubscribe: %s %s', [TopicFilter, GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+  end;
+
+  Res := FClient.Disconnect;
+  if Res <> mqeNoError then
+    log3({$I %LINE%} +Format(' disconnect: %s', [GetEnumName(TypeInfo(TMQTTError), Ord(Res))]));
+  FClient.Free;
 end;
 
 end.

@@ -1,253 +1,270 @@
 object Form1: TForm1
-  Left = 394
-  Height = 616
-  Top = 36
-  Width = 715
-  Caption = 'Form1'
-  ClientHeight = 616
-  ClientWidth = 715
-  LCLVersion = '4.4.0.0'
-  object Button1: TButton
-    Left = 136
-    Height = 26
-    Top = 88
-    Width = 65
-    Caption = 'Button1'
-    TabOrder = 0
-    OnClick = Button1Click
-  end
+  Left = 400
+  Height = 400
+  Top = 176
+  Width = 618
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'MQTT03'
+  ClientHeight = 400
+  ClientWidth = 618
+  OnClose = FormClose
+  Position = poWorkAreaCenter
+  LCLVersion = '3.4.0.0'
   object CheckBoxDebug: TCheckBox
-    Left = 69
+    Left = 72
     Height = 19
-    Top = 130
+    Top = 272
     Width = 87
     Caption = 'Debug Mode'
-    TabOrder = 1
+    TabOrder = 0
   end
   object ButtonConnect: TButton
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 521
+    Left = 72
     Height = 25
     Top = 192
-    Width = 184
-    Anchors = [akTop, akLeft, akRight]
+    Width = 190
     BorderSpacing.Top = 5
     BorderSpacing.Right = 10
     Caption = 'Connect'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = ButtonConnectClick
   end
   object ButtonDisconnect: TButton
     AnchorSideTop.Control = ButtonConnect
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = ButtonConnect
-    AnchorSideRight.Side = asrBottom
-    Left = 521
+    Left = 72
     Height = 25
     Top = 222
-    Width = 184
-    Anchors = [akTop, akLeft, akRight]
+    Width = 190
     BorderSpacing.Top = 5
     Caption = 'Disconnect'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = ButtonDisconnectClick
   end
   object EditHost: TEdit
-    Left = 521
+    Left = 72
     Height = 23
     Top = 8
-    Width = 184
-    TabOrder = 4
+    Width = 190
+    TabOrder = 3
     Text = 'test.mosquitto.org'
   end
   object EditPort: TEdit
-    Left = 521
+    Left = 72
     Height = 23
     Top = 40
-    Width = 184
-    TabOrder = 5
+    Width = 190
+    TabOrder = 4
     Text = '1883'
   end
   object EditID: TEdit
-    Left = 521
+    Left = 72
     Height = 23
     Top = 96
-    Width = 184
-    TabOrder = 6
+    Width = 190
+    TabOrder = 5
   end
   object EditUser: TEdit
-    Left = 521
+    Left = 72
     Height = 23
     Top = 128
-    Width = 184
-    TabOrder = 7
+    Width = 190
+    TabOrder = 6
   end
   object EditPass: TEdit
-    Left = 521
+    Left = 72
     Height = 23
     Top = 160
-    Width = 184
-    TabOrder = 8
+    Width = 190
+    TabOrder = 7
   end
   object Label1: TLabel
-    Left = 456
+    AnchorSideTop.Control = EditHost
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditHost
+    Left = 44
     Height = 15
-    Top = 16
+    Top = 12
     Width = 28
+    Anchors = [akTop, akRight]
     Caption = 'Host:'
   end
   object Label2: TLabel
-    Left = 456
+    AnchorSideTop.Control = EditPort
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditPort
+    Left = 47
     Height = 15
-    Top = 48
+    Top = 44
     Width = 25
+    Anchors = [akTop, akRight]
     Caption = 'Port:'
   end
   object Label3: TLabel
-    Left = 448
+    AnchorSideTop.Control = EditID
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditID
+    Left = 25
     Height = 15
-    Top = 104
+    Top = 100
     Width = 47
+    Anchors = [akTop, akRight]
     Caption = 'Client-ID'
   end
   object Label4: TLabel
-    Left = 448
+    AnchorSideTop.Control = EditUser
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditUser
+    Left = 14
     Height = 15
-    Top = 136
+    Top = 132
     Width = 58
+    Anchors = [akTop, akRight]
     Caption = 'UserName:'
   end
   object Label5: TLabel
-    Left = 448
+    AnchorSideTop.Control = EditPass
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditPass
+    Left = 22
     Height = 15
-    Top = 168
+    Top = 164
     Width = 50
+    Anchors = [akTop, akRight]
     Caption = 'Password'
   end
   object CheckBoxSSL: TCheckBox
     AnchorSideTop.Side = asrBottom
-    Left = 521
+    Left = 72
     Height = 19
     Top = 72
     Width = 36
     BorderSpacing.Top = 3
     Caption = 'SSL'
-    TabOrder = 9
+    TabOrder = 8
   end
   object Label6: TLabel
-    Left = 448
+    AnchorSideTop.Control = EditTopic
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditTopic
+    Left = 308
     Height = 15
-    Top = 264
+    Top = 12
     Width = 31
+    Anchors = [akTop, akRight]
     Caption = 'Topic:'
   end
   object EditTopic: TEdit
-    Left = 521
+    Left = 339
     Height = 23
-    Top = 256
-    Width = 184
-    TabOrder = 10
+    Top = 8
+    Width = 190
+    TabOrder = 9
+    Text = 'home/#'
   end
   object Label7: TLabel
-    Left = 448
+    AnchorSideTop.Control = SpinEditSubID
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = SpinEditQoS
+    Left = 282
     Height = 15
-    Top = 296
+    Top = 44
     Width = 57
+    Anchors = [akTop, akRight]
     Caption = 'Subscr.-ID:'
   end
   object ButtonSubscribe: TButton
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 521
+    Left = 339
     Height = 25
-    Top = 320
-    Width = 184
-    Anchors = [akTop, akLeft, akRight]
+    Top = 72
+    Width = 190
     BorderSpacing.Top = 5
     BorderSpacing.Right = 10
     Caption = 'Subscribe'
-    TabOrder = 11
+    TabOrder = 10
     OnClick = ButtonSubscribeClick
   end
   object Label8: TLabel
-    Left = 440
+    AnchorSideTop.Control = EditPubTopic
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditPubTopic
+    Left = 308
     Height = 15
-    Top = 432
+    Top = 204
     Width = 31
+    Anchors = [akTop, akRight]
     Caption = 'Topic:'
   end
   object EditPubTopic: TEdit
-    Left = 515
+    Left = 339
     Height = 23
-    Top = 424
+    Top = 200
+    Width = 190
+    TabOrder = 11
+  end
+  object EditPubMessage: TEdit
+    Left = 339
+    Height = 23
+    Top = 232
     Width = 190
     TabOrder = 12
   end
-  object EditPubMessage: TEdit
-    Left = 515
-    Height = 23
-    Top = 456
-    Width = 190
-    TabOrder = 13
-  end
   object Label9: TLabel
-    Left = 440
+    AnchorSideTop.Control = EditPubMessage
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditPubMessage
+    Left = 290
     Height = 15
-    Top = 464
+    Top = 236
     Width = 49
+    Anchors = [akTop, akRight]
     Caption = 'Message:'
   end
   object ButtonPublish: TButton
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 515
+    Left = 339
     Height = 25
-    Top = 584
+    Top = 360
     Width = 190
     BorderSpacing.Top = 4
     BorderSpacing.Right = 10
     Caption = 'Publish'
-    TabOrder = 14
+    TabOrder = 13
     OnClick = ButtonPublishClick
   end
   object ButtonUnsubscribe: TButton
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 515
+    Left = 339
     Height = 25
-    Top = 384
+    Top = 136
     Width = 190
-    Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 5
     BorderSpacing.Right = 10
     Caption = 'Unsubscribe'
-    TabOrder = 15
+    TabOrder = 14
     OnClick = ButtonUnsubscribeClick
   end
   object SpinEditQoS: TSpinEdit
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Side = asrBottom
-    Left = 515
+    Left = 339
     Height = 23
-    Top = 552
+    Top = 328
     Width = 190
-    Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 3
     MaxValue = 2
-    TabOrder = 16
+    TabOrder = 15
   end
   object LabelQoS: TLabel
     AnchorSideTop.Control = SpinEditQoS
     AnchorSideTop.Side = asrCenter
     AnchorSideRight.Control = SpinEditQoS
-    Left = 490
+    Left = 314
     Height = 15
-    Top = 556
+    Top = 332
     Width = 22
     Anchors = [akTop, akRight]
     BorderSpacing.Right = 3
@@ -255,60 +272,72 @@ object Form1: TForm1
     ParentColor = False
   end
   object Label10: TLabel
-    Left = 440
+    AnchorSideTop.Control = EditRespTopic
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditRespTopic
+    Left = 280
     Height = 15
-    Top = 496
+    Top = 268
     Width = 59
+    Anchors = [akTop, akRight]
     Caption = 'Resp. Topic'
   end
   object Label11: TLabel
-    Left = 440
+    AnchorSideTop.Control = EditCorrelData
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = EditCorrelData
+    Left = 277
     Height = 15
-    Top = 528
+    Top = 300
     Width = 62
+    Anchors = [akTop, akRight]
     Caption = 'Correl. Data'
   end
   object EditRespTopic: TEdit
-    Left = 515
+    Left = 339
     Height = 23
-    Top = 488
+    Top = 264
+    Width = 190
+    TabOrder = 16
+  end
+  object EditCorrelData: TEdit
+    Left = 339
+    Height = 23
+    Top = 296
     Width = 190
     TabOrder = 17
   end
-  object EditCorrelData: TEdit
-    Left = 515
-    Height = 23
-    Top = 520
-    Width = 190
-    TabOrder = 18
-  end
   object SpinEditSubID: TSpinEdit
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Side = asrBottom
-    Left = 521
+    Left = 339
     Height = 23
-    Top = 288
-    Width = 184
-    Anchors = [akTop, akLeft, akRight]
+    Top = 40
+    Width = 190
     BorderSpacing.Top = 3
-    TabOrder = 19
+    TabOrder = 18
     Value = 1
   end
   object ComboBoxSubs: TComboBox
-    AnchorSideLeft.Control = EditHost
-    AnchorSideTop.Control = ButtonPublish
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 520
+    Left = 339
     Height = 23
-    Top = 352
-    Width = 184
-    Anchors = []
+    Top = 104
+    Width = 190
     BorderSpacing.Top = 15
     BorderSpacing.Right = 10
     ItemHeight = 15
     Style = csDropDownList
-    TabOrder = 20
+    TabOrder = 19
+  end
+  object Shape1: TShape
+    Left = 268
+    Height = 389
+    Top = 2
+    Width = 5
+  end
+  object Shape2: TShape
+    Left = 277
+    Height = 5
+    Top = 176
+    Width = 333
   end
 end
